@@ -1,0 +1,61 @@
+buildscript {
+	ext {
+		environment = 'local'	/* alternative is 'fordnetwork'*/
+		springBootVersion = '2.0.3.RELEASE'
+	}
+	if(environment == 'fordnetwork'){
+		System.setProperty('http.proxyHost', 'proxyvipfmcc.nb.ford.com')
+		System.setProperty('http.proxyPort', '83')
+		System.setProperty('http.nonProxyHosts', '*.ford.com|localhost')
+		System.setProperty('https.proxyHost', 'proxyvipfmcc.nb.ford.com')
+		System.setProperty('https.proxyPort', '83')
+		System.setProperty('https.nonProxyHosts', '*.ford.com|localhost')
+	}
+	repositories {
+		mavenCentral()
+		maven { url "https://oss.sonatype.org/content/repositories/releases" }
+		if(environment == 'fordnetwork') {
+			maven { url "http://www.nexus.ford.com/repository/external-proxy-group/" }
+			maven { url "https://wwwqa.nexus.ford.com/repository/ford_community/" }
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath("com.github.pivotalservices:ya-cf-app-gradle-plugin:2.3.0-rc.1")
+		if(environment == 'fordnetwork') {
+			classpath("com.ford.quartermaster:quartermaster-plugin:1.1-SNAPSHOT")
+		}
+	}
+}
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+if(environment == 'fordnetwork'){
+	apply plugin: 'quartermaster-plugin'
+}
+
+
+group = 'org.sapphon'
+version = '0.0.1-SNAPSHOT'
+archivesBaseName = 'adapterexample'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+	if(environment == 'fordnetwork') {
+		maven { url "http://www.nexus.ford.com/repository/external-proxy-group/" }
+		maven { url "http://www.nexus.ford.com/content/groups/public/" }
+	}
+}
+
+
+dependencies {
+	compile('javax.xml.bind:jaxb-api:2.3.0')
+	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	compile('org.springframework.boot:spring-boot-starter-web')
+	compile('org.apache.commons:commons-lang3:3.6')
+	compile('org.springframework.session:spring-session-core')
+	compile('com.h2database:h2')
+}
