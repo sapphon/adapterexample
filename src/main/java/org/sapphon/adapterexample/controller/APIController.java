@@ -1,6 +1,8 @@
 package org.sapphon.adapterexample.controller;
 
+import org.sapphon.adapterexample.model.Orange;
 import org.sapphon.adapterexample.model.User;
+import org.sapphon.adapterexample.repository.jpa.OrangeRepository;
 import org.sapphon.adapterexample.repository.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +16,12 @@ import static org.hibernate.validator.internal.util.CollectionHelper.newArrayLis
 public class APIController {
 
     private UserRepository userRepository;
+    private OrangeRepository orangeRepository;
 
     @Autowired
-    public APIController(UserRepository userRepository) {
+    public APIController(UserRepository userRepository, OrangeRepository orangeRepository) {
         this.userRepository = userRepository;
+        this.orangeRepository = orangeRepository;
     }
 
     @RequestMapping(value="/users", method=RequestMethod.GET)
@@ -25,7 +29,14 @@ public class APIController {
         return newArrayList(this.userRepository.findAll());
     }
 
-//region healthcheck
+    @RequestMapping(value="/oranges", method=RequestMethod.GET)
+    public List<Orange> getAllOranges(){
+        return newArrayList(this.orangeRepository.findAll());
+    }
+
+
+
+    //region healthcheck
     @RequestMapping(value = "/health")
     public String healthEndpoint() {
         return this.getCannedResponse();
