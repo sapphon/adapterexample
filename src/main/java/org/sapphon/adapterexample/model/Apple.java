@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Apple {
     @Id
-    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     long id;
 
     String skinColor;

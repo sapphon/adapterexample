@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface OrangeRepository extends CrudRepository<Orange, Long>{
+public interface OrangeRepository extends CrudRepository<Orange, Long> {
     Optional<Orange> findOneById(long id);
 }

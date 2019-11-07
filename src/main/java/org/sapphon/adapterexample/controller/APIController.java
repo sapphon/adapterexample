@@ -5,7 +5,10 @@ import org.sapphon.adapterexample.model.User;
 import org.sapphon.adapterexample.repository.jpa.OrangeRepository;
 import org.sapphon.adapterexample.repository.jpa.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -24,16 +27,15 @@ public class APIController {
         this.orangeRepository = orangeRepository;
     }
 
-    @RequestMapping(value="/users", method=RequestMethod.GET)
-    public List<User> getAllUsers(){
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public List<User> getAllUsers() {
         return newArrayList(this.userRepository.findAll());
     }
 
-    @RequestMapping(value="/oranges", method=RequestMethod.GET)
-    public List<Orange> getAllOranges(){
+    @RequestMapping(value = "/oranges", method = RequestMethod.GET)
+    public List<Orange> getAllOranges() {
         return newArrayList(this.orangeRepository.findAll());
     }
-
 
 
     //region healthcheck

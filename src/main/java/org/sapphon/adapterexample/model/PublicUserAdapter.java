@@ -7,8 +7,8 @@ public class PublicUserAdapter {
     public String jobRole;
 
     public PublicUserAdapter(User input) {
-        this.id=input.id;
-        this.name=input.name;
-        this.jobRole=input.jobRole;
+        this.id = input.id;
+        this.name = input.name;
+        this.jobRole = input.jobRole;
     }
 }
